@@ -1,3 +1,6 @@
+"""A document with package specifications"""
+
+
 from setuptools import setup
 
 setup(name='authors_clasiffier',
