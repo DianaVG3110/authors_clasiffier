@@ -61,9 +61,9 @@ letra
 nltk.download('punkt')
 nltk.download('stopwords')
 
-msg= open(cancion)
+msg = open(cancion)
 
-is_body= False
+is_body = False
 lines = []
 
 for elemento in msg:
@@ -92,7 +92,7 @@ stemmer = SnowballStemmer('spanish')
 Stem = []
 
 for word in filtradas:
-    stemmed_word= stemmer.stem(word)
+    stemmed_word = stemmer.stem(word)
     Stem.append(stemmed_word)
 
 print(Stem)
