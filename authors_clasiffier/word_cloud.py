@@ -7,17 +7,17 @@ import os
 def gen_wordcloud(file, output):
     text = open(file).read()
     wordcloud = WordCloud(width = 1280 , height = 720).generate(text)
-    wordcloud.to_file(output + '.jpg')
+    wordcloud.to_file(Path(str(output) +  '.jpg'))
 
 def truncate_filename(filename):
     return(Path(filename).stem)
 
 def gen_wordcloud_directory(path):
-    output_dir = "../images/"
+    p = Path(path)
+    output_dir = Path("../images/")
     for filename in os.listdir(path):
-        path_ = path + filename
+        f = Path(filename)
+        path_ = p / f
         print(path_)
         gen_wordcloud(path_,
-                      output_dir + truncate_filename(filename))
-
-
+                      output_dir / Path(truncate_filename(filename)))
