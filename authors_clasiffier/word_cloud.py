@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
+"""This file creates wordclouds using text files"""
+
 from wordcloud import WordCloud
 from pathlib import Path
 import os
 
-
 def gen_wordcloud(file, output):
+    """Generates wordcloud from `file` and saves at `output`"""
     text = open(file).read()
     wordcloud = WordCloud(width = 1280 , height = 720).generate(text)
     wordcloud.to_file(Path(str(output) +  '.jpg'))
