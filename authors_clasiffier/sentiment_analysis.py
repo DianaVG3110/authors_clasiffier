@@ -24,47 +24,24 @@ words = word_tokenize(text.lower())  # Convierte a minúsculas
 # Eliminación de signos de puntuación y palabras irrelevantes
 stop_words = set(stopwords.words('spanish'))
 words = [word for word in words if word.isalnum() and word not in stop_words]
-# La lógica para determinar la categoría de sentimiento
-# Puedes usar análisis de palabras clave, reglas específicas, etc.
+from nltk.sentiment import SentimentIntensityAnalyzer
 
-#sentiment_category = "positivo"
-sentiment_category = ["positivo", "negativo"]
-#document = (words, sentiment_category)
-#document = [(w,s) for w in words for s in sentiment_category]
-#Crea la estructura de datos necesaria para entrenar un modelo o realizar análisis.
-positiv = ["amiga","feliz","fuerza","corazón","amaré","besó","cielo","iluminó"]
-negative = ["apagan","soledad","crujen","llueve","derramando","silencio","feróz"]
+# Crear una instancia del analizador de intensidad de sentimiento de NLTK
+sia = SentimentIntensityAnalyzer()
 
-"""Ejemplo de código"""
-! pip install nltk
-import nltk
-from nltk.corpus import movie_reviews
-nltk.download('movie_reviews')
-documents = [(list(movie_reviews.words(fileid)), category)
-             for category in movie_reviews.categories()
-             for fileid in movie_reviews.fileids(category)]
-import random
-random.shuffle(documents)
-training_set = documents[:1500]
-test_set = documents[1500:]
+# Obtener la polaridad del sentimiento
+sentiment_score = sia.polarity_scores(text)
 
-"""Función para extraer las caractéristicas básicas del mensaje"""
+# Imprimir el resultado
+print("Sentiment Score:", sentiment_score)
 
-all_words = nltk.FreqDist(w.lower() for w in movie_reviews.words())
-word_features = list(all_words)[:3000]
+# Interpretar el sentimiento
+if sentiment_score['compound'] >= 0.05:
+    print("La canción tiene un sentimiento positivo.")
+elif sentiment_score['compound'] <= -0.05:
+    print("La canción tiene un sentimiento negativo.")
+else:
+    print("La canción tiene un sentimiento neutro.")
 
-def document_features(document):
-    document_words = set(document)
-    features = {}
-    for word in word_features:
-        features[word] = (word in document_words)
-    return features
-featuresets = [(document_features(d), c) for (d, c) in training_set]
-classifier = nltk.NaiveBayesClassifier.train(featuresets)
-test_featuresets = [(document_features(d), c) for (d, c) in test_set]
-accuracy = nltk.classify.accuracy(classifier, test_featuresets)
-print("Accuracy:", accuracy)
 
-movie_reviews
 
-words
