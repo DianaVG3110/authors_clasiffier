@@ -15,6 +15,7 @@ setup(
     packages=["authors_clasiffier"],
     zip_safe=False,
     install_requires=[
-        "wordcloud"
+        "wordcloud",
+        "nltk"
     ]
 )
