@@ -57,6 +57,8 @@ def gen_wordcloud_directory(dirname : str, outputdir : str):
     directory = os.path.dirname(__file__)
     path = os.path.join(directory, dirname)
     output_dir = os.path.join(directory, outputdir)
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
     for filename in os.listdir(path):
         file = os.path.join(path, filename)
         if is_text_file(file):
