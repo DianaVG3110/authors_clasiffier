@@ -12,7 +12,7 @@ setup(
     author_email="ve333269@uaeh.edu.mx, \
       ol333736@uaeh.edu.mx, ri353856@uaeh.edu.mx, ga419623@uaeh.edu.mx",
     license="MIT",
-    packages=["minimal"],
+    packages=["authors_clasiffier"],
     zip_safe=False,
     install_requires=[
         "wordcloud"
