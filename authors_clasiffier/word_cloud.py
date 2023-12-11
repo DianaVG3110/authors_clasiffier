@@ -31,11 +31,16 @@ def truncate_filename(filename : str) -> str:
     return os.path.splitext(filename)
 
 
-def gen_wordcloud_directory(dirname : str):
-    """Iterates through <dirname> files and generates their wordclouds"""
+def gen_wordcloud_directory(dirname : str, outputdir : str):
+    """Iterates through files and generates their wordclouds
+    
+    Parameters:
+    dirname (str): name of the directory where the text files are
+    outputdir (str): path where the generated images needs to be placed
+    """
     directory = os.path.dirname(__file__)
     path = os.path.join(directory, dirname)
-    output_dir = os.path.join(directory, "../images/")
+    output_dir = os.path.join(directory, outputdir)
     for filename in os.listdir(path):
         file = os.path.join(path, filename)
         gen_wordcloud(
@@ -44,4 +49,4 @@ def gen_wordcloud_directory(dirname : str):
 
 
 if __name__ == "__main__":
-    gen_wordcloud_directory("../data")
+    gen_wordcloud_directory("../data","../images")
