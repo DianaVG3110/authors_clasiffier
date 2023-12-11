@@ -2,34 +2,50 @@
 
 import os
 import nltk
+import numpy as np
+from PIL import Image
 from langdetect import detect
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 
 
-def gen_wordcloud(file : str, output : str, language = "auto"):
+def detect_language(file):
+    """detect language as spanish or english, given a file"""
+    lang = {'es':'spanish','en':'english'}
+    with open(file, encoding="utf8") as text_file:
+        code = detect(text_file.read())
+    return lang[code]
+
+def gen_wordcloud(file : str, output : str, language = "auto", mask = None,
+                  width = 600, height = 600 ,*args, **kwargs):
     """
     Generates wordcloud from file. This function
     uses the langdetect library for detect the language of the input text
     Parmeters:
     file (str): path to text file to be converted
-    output (str): path to output JPG file
+    output (str): path and name of the output JPG file
     language (str): language to take care of stopwords, default to auto 
     for autodetecting language, in other case user must put the name 
     of language following the names that NLTK stopword function admits.
+    mask (str): complete path to mask image
     """
+    if mask is not None:
+        filedir = os.path.dirname(__file__)
+        maskdir = os.path.join(filedir,mask)
+        mask = np.array(Image.open(maskdir))
     if language == "auto":
-        lang = {'es':'spanish','en':'english'}
-        with open(file, encoding="utf8") as text_file:
-            code = detect(text_file.read())
-        language = lang[code]
+        language = detect_language(file)
     forbidden_words = list(stopwords.words(language))
     with open(file, encoding="utf8") as text_file:
         text = text_file.read()
-        wordcloud = WordCloud(width=1280,
-                               height=720,
-                               stopwords=forbidden_words).generate(text)
+        wordcloud = WordCloud(width = width,
+                              height = height,
+                               stopwords=forbidden_words,
+                               mask = mask, *args,**kwargs)
+        wordcloud.generate(text)
         wordcloud.to_file(output)
+
+
 
 
 def truncate_filename(filename : str) -> str:
@@ -42,7 +58,7 @@ def truncate_filename(filename : str) -> str:
     Returns:
     str: name of the file without the extension
     """
-    return os.path.splitext(filename)
+    return os.path.splitext(filename)[0]
 
 
 def is_text_file(filename : str) -> bool:
@@ -56,12 +72,9 @@ def is_text_file(filename : str) -> bool:
     bool: True if the file is a text file
     """
     extension = os.path.splitext(filename)[1]
-    if extension == ".txt":
-        return True
-    else:
-        return False
+    return extension == ".txt"
 
-def gen_wordcloud_directory(dirname : str, outputdir : str):
+def gen_wordcloud_directory(dirname : str, outputdir : str, *args, **kwargs):
     """
     Iterates through files and generates their wordclouds
     
@@ -77,13 +90,13 @@ def gen_wordcloud_directory(dirname : str, outputdir : str):
     for filename in os.listdir(path):
         file = os.path.join(path, filename)
         if is_text_file(file):
-            gen_wordcloud(
-                file,
-                os.path.join(output_dir, truncate_filename(filename)[0] + ".jpg"),
-                language = "auto"
+            gen_wordcloud(file,
+                os.path.join(output_dir, truncate_filename(filename) + ".jpg"),
+                *args,
+                **kwargs
             )
 
 
 if __name__ == "__main__":
     nltk.download("stopwords")
-    gen_wordcloud_directory("../data","../images")
+    gen_wordcloud_directory("../data","../images", mask = "../templates/heart.jpg")
