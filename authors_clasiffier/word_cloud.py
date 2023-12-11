@@ -12,12 +12,10 @@ def gen_wordcloud(file : str, output : str):
     file (str): path to text file to be converted
     output (str): path to output JPG file
     """
-    try:
-        text = open(file, encoding="utf8").read()
-    except UnicodeDecodeError:
-        text = open(file, encoding="cp850").read()
-    wordcloud = WordCloud(width=1280, height=720).generate(text)
-    wordcloud.to_file(output)
+    with open(file, encoding="utf8") as text_file:
+        text = text_file.read()
+        wordcloud = WordCloud(width=1280, height=720).generate(text)
+        wordcloud.to_file(output)
 
 
 def truncate_filename(filename : str) -> str:
