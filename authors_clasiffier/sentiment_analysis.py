@@ -12,7 +12,8 @@ Original file is located at
 import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
-with open("/AlejandroSanz.txt", 'r', encoding='utf-8') as file:
+nltk.download('vader_lexicon')
+with open("/Rihanna.txt", 'r', encoding='utf-8') as file:
     text = file.read()
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
