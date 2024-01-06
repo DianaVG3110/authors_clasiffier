@@ -1,6 +1,11 @@
 """Functions to create wordclouds from text files"""
 
 import os
+import nltk
+import numpy as np
+from PIL import Image
+from nltk.corpus import stopwords
+from langdetect import detect
 from wordcloud import WordCloud
 
 
@@ -56,7 +61,6 @@ def truncate_filename(filename: str) -> str:
     return os.path.splitext(filename)[0]
 
 
-<<<<<<< HEAD
 def is_text_file(filename: str) -> bool:
     """
     Check if a file is a text file
@@ -64,20 +68,10 @@ def is_text_file(filename: str) -> bool:
     Parameters:
     filename (str): name of the file
 
-=======
-def is_text_file(filename : str) -> bool:
-    """
-    Check if a file is a text file
-    
-    Parameters:
-    filename (str): name of the file
-    
->>>>>>> b62218ac1a434d75707d51da29e40af14840b99c
     Returns:
     bool: True if the file is a text file
     """
     extension = os.path.splitext(filename)[1]
-<<<<<<< HEAD
     return extension == ".txt"
 
 
@@ -85,16 +79,6 @@ def gen_wordcloud_directory(dirname: str, outputdir: str, **kwargs):
     """
     Iterates through files and generates their wordclouds
 
-=======
-    if extension == ".txt":
-        return True
-    else:
-        return False
-
-def gen_wordcloud_directory(dirname : str, outputdir : str):
-    """Iterates through files and generates their wordclouds
-    
->>>>>>> b62218ac1a434d75707d51da29e40af14840b99c
     Parameters:
     dirname (str): name of the directory where the text files are
     outputdir (str): path where the generated images needs to be placed
@@ -106,13 +90,9 @@ def gen_wordcloud_directory(dirname : str, outputdir : str):
         file = os.path.join(path, filename)
         if is_text_file(file):
             gen_wordcloud(
-<<<<<<< HEAD
                 file,
                 os.path.join(output_dir, truncate_filename(filename) + ".jpg"),
                 **kwargs
-=======
-                file, os.path.join(output_dir, truncate_filename(filename)[0] + ".jpg")
->>>>>>> b62218ac1a434d75707d51da29e40af14840b99c
             )
 
 
