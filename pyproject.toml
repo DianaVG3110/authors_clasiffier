@@ -1,0 +1,13 @@
+[build-system]
+requires = [
+    "setuptools",
+    "nltk",
+    "textblob",
+    "numpy",
+    "langdetect",
+    "wordcloud",
+    "pillow",
+    "matplotlib",
+    "pandas"
+]
+build-backend = "setuptools.build_meta"
