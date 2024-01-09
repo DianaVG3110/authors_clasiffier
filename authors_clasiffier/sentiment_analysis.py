@@ -59,9 +59,27 @@ def spanish_analysis(text_file: str):
         text = file.read()
 
     sentiment = TextBlob(text).sentiment.polarity
-    print(sentiment)
+    
+    if sentiment > 0:
+        print("El sentimiento del texto dado es postivo")
+    elif sentiment < 0:
+        print("El sentimiento del texto dado es negativo")
+    else:
+        print("El sentimiento del texto dado es neutro")
+
+def analysis(text, language):
+    """
+    This function analyzes the text parsed with the name `text`
+    the language argument can be 'spanish' or 'english'
+    """
+    if language == "spanish":
+        spanish_analysis(text)
+    elif language == "english":
+        english_analysis(text)
+    else: 
+        print("This argument is not supported")
 
 
 if __name__ == "__main__":
-    english_analysis("./data/LP.txt")
-    spanish_analysis("./data/The Beatles.txt")
+    analysis("./data/Adele.txt",language="english")
+    analysis("./data/Adele.txt",language="spanish")
