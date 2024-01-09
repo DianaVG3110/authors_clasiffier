@@ -7,11 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1s4pBorrFyynhLjFwADeeUD6bg2z5p1XP
 """
 
-#total_palabras
-
-# Total de palabras
-#total_palabras.sum()
-
 # Cargamos bibliotecas
 import numpy as np
 import pandas as pd
@@ -23,11 +18,11 @@ from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
-# from sklearn.model_selection import train_test_split
-
 nltk.download('punkt') # Remueve sugnos de puntuación
 nltk.download('stopwords') # Remueve articulos
 
+# Esta funcion toma como argumento un archivo de texto que contenga una canción, ya sea en inglés o español, 
+# y regresa una serie con las raices de las palabras que están en el texto y el numero de veces que aparece
 def contador_palabras(cancion, idioma = 'spanish'):
     cancion_cargada = open(cancion)
     lista_cancion = [verso for verso in cancion_cargada]
@@ -38,27 +33,31 @@ def contador_palabras(cancion, idioma = 'spanish'):
     cantidad_palabra = pd.Series(palabras_filtradas).value_counts()
     return cantidad_palabra
 
-def probabilidad_artista(artista):
+# Esta funcion toma como argumento un archivo de texto con las canciones de un artista en particular, y
+# regresa una serie con la probabilidad de cada palabra en dicho archivo de texto
+def probabilidad_artista(artista, palabra = 'si'):
     return contador_palabras(artista)/contador_palabras(artista).sum()
 
-probabilidad_artista('AlejandroSanz.txt')
-
-def particion(artista, lista_artistas):
+# Esta funcion toma como argumento una lista de archivos de texto con canciones de cada autor y resgresa
+# una serie con la probabilidad de cada que palabra ocurra en todos los archivos de texto 
+def particion(lista_artistas, artista = 'AlejandroSanz.txt'):
     ae_1= "AlejandroSanz.txt"
     ae_2= "Love of lesbian.txt"
-    ae_3= "jose_jose.txt"
-    ae_4= "luis_miguel.txt"
+    ae_3= "jose_jose"
+    ae_4= "luis_miguel"
     ae_5= "melendi.txt"
-    ae_6= "miguel_bose.txt"
+    ae_6= "miguel_bose"
     autores = [ae_1, ae_2, ae_3, ae_4, ae_5, ae_6]
-    prob_token= pd.DataFrame(contador_palabras(artista)-contador_palabras(artista))
-    prob_token['Total']= prob_token
+    prob_token = pd.DataFrame(contador_palabras(artista)-contador_palabras(artista))
+    prob_token['Total'] = prob_token
     for autor in autores:
         prob_token[autor] = (contador_palabras(autor)/contador_palabras(autor).sum())
     prob_token.fillna(0, inplace=True)
-    prob_token['Total']= prob_token[ae_1] + prob_token[ae_2]+ prob_token[ae_3]+ prob_token[ae_4]+ prob_token[ae_5]+prob_token[ae_6]
+    prob_token['Total'] = prob_token[ae_1] + prob_token[ae_2] + prob_token[ae_3] + prob_token[ae_4] + prob_token[ae_5] + Esta prob_token[ae_6]
     return prob_token['Total']
 
+# Se define cada archivo de texto para cada artista y se crea una lista con ellos para utilizar la 
+# funcion anterior
 ae_1= "AlejandroSanz.txt"
 ae_2= "Love of lesbian.txt"
 ae_3= "jose_jose"
@@ -67,36 +66,25 @@ ae_5= "melendi.txt"
 ae_6= "miguel_bose"
 autores_español = [ae_1, ae_2, ae_3, ae_4, ae_5, ae_6]
 
-# Para unir todos los archivos de texto
-with open('autores_totales.txt', 'w') as new_file: #'w' inidica que se sobreescribirá en el texto
-    for autor in autores_español: #toma cada archivo de texto
-        with open(autor) as a: #abre cada archivo de texto
-            for line in a: #va pasando cada linea de cada texto al texto nuevo
-                new_file.write(line)
-            new_file.write("\n")
-
-# Archivo donde estan guardadas todas las canciones
-total_palabras = contador_palabras('autores_totales.txt')
-
-ola = particion('autores_totales.txt', autores_español)
-ola
-
-ola['desvan']
-
+# Esta funcion toma como argumento un arhivo de texto que contiene las canciones de un artista en particular.
+# Lo que hace es calcular la probabilidad de que una palabra este en el archivo de texto de un artista en particular
+# entre la probabilidad de que la palabra este en todos los archivos de texto para cada autor
 def probabilidad_final(artista, palabra):
-    return probabilidad_artista(artista, palabra)/particion(artista, palabra)
+    parte_a= probabilidad_artista(artista, palabra)
+    parte_p= probabilidad_palabras
+    return parte_1/parte_2[parte_1.index]
 
-probabilidad_final("AlejandroSanz.txt", 'si')
+# Guardamos en una variable la probabilidad final de cada palabra
+probabilidad_f = probabilidad_final("AlejandroSanz.txt", 'si')
 
-#def data_frame(artista):
-#    data_frame = pd.DataFrame(contador_palabras(artista))
-#    for palabra in contador_palabras(artista):
-#        data_frame['Probabilidad'] = probabilidad_final(artista, palabra)
-#    return data_frame
-
-contador_palabras('Amiga_Mia.txt')
-
+# Realizamos una prueba para calcular la probabilidad de que una cancion sea de un artista, sumando las probabilidades
+# de cada palabra en el archivo de texto que contiene la cancion. Añadimos una excepcion por si la raiz de una palabra
+# que este en la cancion que queremos analizar, no se encuentre originalmente en las raices extraidas del archivo de texto
+# que contiene canciones de tal artista
 prueba = 0
-for palabra in contador_palabras('Amiga_Mia.txt'):
-    prueba = prueba + probabilidad_final('Amiga_Mia.txt', palabra)
+for palabra in contador_palabras('Agradezco.txt').index:
+    try:
+        prueba = prueba + (1/36)*probabilidad_f[palabra]
+    except: 
+        prueba = prueba + 0 
 
