@@ -88,9 +88,21 @@ def classify(autor, cancion):
         color_punto = 'green'
     else:
         color_punto = 'red'
-
-    frase = f'La probabilidad de que tu cancion sea de {autor} es de {probabilidad}'
-
+    
+    frase = ''
+    if autor == ae_1:
+        frase = f'La probabilidad de que tu cancion sea de Alejandro Sanz es de {probabilidad}'
+    elif autor == ae_2:
+        frase = f'La probabilidad de que tu cancion sea de Love of Lesbian es de {probabilidad}'
+    elif autor == ae_3:
+        frase = f'La probabilidad de que tu cancion sea de José José es de {probabilidad}'
+    elif autor == ae_4:
+        frase = f'La probabilidad de que tu cancion sea de Luis Miguel es de {probabilidad}'
+    elif autor == ae_5:
+        frase = f'La probabilidad de que tu cancion sea de Melendi es de {probabilidad}'
+    else:
+        frase = f'La probabilidad de que tu cancion sea de Miguel Bosé es de {probabilidad}'
+        
     #Matplotlib
     figure = plt.figure()
     ax = figure.add_axes([0, 0, 1, 1])
