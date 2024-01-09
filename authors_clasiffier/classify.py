@@ -11,6 +11,7 @@ Original file is located at
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import pkg_resources
 
 import nltk # Para procesamiento de texto
 from nltk.stem import PorterStemmer
@@ -21,12 +22,13 @@ from nltk.tokenize import word_tokenize
 nltk.download('punkt') # Remueve signos de puntuación
 nltk.download('stopwords') # Remueve articulos
 
-ae_1= "AlejandroSanz.txt"
-ae_2= "Love of lesbian.txt"
-ae_3= "jose_jose.txt"
-ae_4= "luis_miguel.txt"
-ae_5= "melendi.txt"
-ae_6= "miguel_bose.txt"
+ae_1= pkg_resources.resource_filename('authors_clasiffier', '/data/AlejandroSanz.txt') 
+ae_2= pkg_resources.resource_filename('authors_clasiffier', '/data/Love of lesbian.txt') 
+ae_3= pkg_resources.resource_filename('authors_clasiffier', '/data/jose_jose.txt') 
+ae_4= pkg_resources.resource_filename('authors_clasiffier', '/data/luis_miguel.txt') 
+ae_5= pkg_resources.resource_filename('authors_clasiffier', '/data/melendi.txt') 
+ae_6= pkg_resources.resource_filename('authors_clasiffier', '/data/miguel_bose.txt') 
+ae_t = pkg_resources.resource_filename('authors_clasiffier', '/data/autores_totales.txt') 
 autores_español = [ae_1, ae_2, ae_3, ae_4, ae_5, ae_6]
 
 def contador_palabras(cancion):
@@ -46,15 +48,15 @@ def probabilidad_artista(artista):
     y regresa una serie con la probabilidad de cada palabra en dicho archivo de texto """
     return contador_palabras(artista)/contador_palabras(artista).sum()
 
-def particion(lista_artistas, artista = 'autores_totales.txt'):
+def particion(lista_artistas, artista = ae_t):
     """ Esta funcion toma como argumento una lista de archivos de texto con canciones de cada autor y resgresa
     una serie con la probabilidad de cada que palabra ocurra en todos los archivos de texto  """
-    ae_1= "AlejandroSanz.txt"
-    ae_2= "Love of lesbian.txt"
-    ae_3= "jose_jose.txt"
-    ae_4= "luis_miguel.txt"
-    ae_5= "melendi.txt"
-    ae_6= "miguel_bose.txt"
+    ae_1= pkg_resources.resource_filename('authors_clasiffier', '/data/AlejandroSanz.txt') 
+    ae_2= pkg_resources.resource_filename('authors_clasiffier', '/data/Love of lesbian.txt') 
+    ae_3= pkg_resources.resource_filename('authors_clasiffier', '/data/jose_jose.txt') 
+    ae_4= pkg_resources.resource_filename('authors_clasiffier', '/data/luis_miguel.txt') 
+    ae_5= pkg_resources.resource_filename('authors_clasiffier', '/data/melendi.txt') 
+    ae_6= pkg_resources.resource_filename('authors_clasiffier', '/data/miguel_bose.txt') 
     autores = [ae_1, ae_2, ae_3, ae_4, ae_5, ae_6]
     prob_token= pd.DataFrame(contador_palabras(artista)-contador_palabras(artista))
     prob_token['Total']= prob_token
@@ -73,7 +75,7 @@ def classify(autor, cancion):
     color_punto = ''
     palabras_cancion= contador_palabras(cancion)
     proba_artista = probabilidad_artista(autor)
-    probabilidad_palabras = particion(autores_español, artista= 'autores_totales.txt')
+    probabilidad_palabras = particion(autores_español, artista= ae_t)
     probabilidad_final = proba_artista/probabilidad_palabras[proba_artista.index]
 
     for palabra in palabras_cancion.index:
