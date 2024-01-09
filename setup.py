@@ -13,5 +13,9 @@ setup(
       ol333736@uaeh.edu.mx, ri353856@uaeh.edu.mx, ga419623@uaeh.edu.mx",
     license="MIT",
     packages=["authors_clasiffier"],
+    include_package_data = True,
+    package_data = {
+         '' : ['*.txt']
+    },
     zip_safe=False,
 )
