@@ -12,6 +12,17 @@ setup(
     author_email="ve333269@uaeh.edu.mx, \
       ol333736@uaeh.edu.mx, ri353856@uaeh.edu.mx, ga419623@uaeh.edu.mx",
     license="MIT",
+    install_requires = [
+        "setuptools",
+        "nltk",
+        "textblob",
+        "numpy",
+        "langdetect",
+        "wordcloud",
+        "pillow",
+        "matplotlib",
+        "pandas"
+    ],
     packages=["authors_clasiffier"],
     include_package_data = True,
     package_data = {
