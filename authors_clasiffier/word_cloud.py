@@ -7,6 +7,7 @@ from PIL import Image
 from nltk.corpus import stopwords
 from langdetect import detect
 from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 
 def detect_language(file):
@@ -45,7 +46,9 @@ def gen_wordcloud(
             width=width, height=height, stopwords=forbidden_words, mask=mask, **kwargs
         )
         wordcloud.generate(text)
-        wordcloud.to_file(output)
+        #wordcloud.to_file(output)
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
 
 
 def truncate_filename(filename: str) -> str:
