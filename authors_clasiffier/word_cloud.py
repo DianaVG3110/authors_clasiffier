@@ -19,7 +19,7 @@ def detect_language(file):
 
 
 def gen_wordcloud(
-    file: str, output: str, language="auto", mask=None, width=600, height=600, **kwargs
+    file: str, language="auto", mask=None, width=600, height=600, **kwargs
 ):
     """
     Generates wordcloud from file
