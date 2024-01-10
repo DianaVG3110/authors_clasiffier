@@ -1,7 +1,7 @@
 # authors_clasiffier
 
-Este proyecto proporciona funciones que calculan la probabilidad de que algún texto sea escrito por algún autor en el conjunto de datos de entrenamiento. Los autores que fueron elegidos para dichos datos de entrenamiento fueron Alejandro Sanz, José José, Luis Miguel, Miguel Bosé. Melendi y Love of Lesbian. Además proporciona un análisis de sentiminetos del texto dado y una nube de palabras.
-El proyecto consta de tres módulos:
+Este proyecto proporciona funciones que calculan la probabilidad de que algún texto sea escrito por algún autor en el conjunto de datos de entrenamiento. Los autores que fueron elegidos para dichos datos de entrenamiento fueron Alejandro Sanz, José José, Luis Miguel, Miguel Bosé. Melendi y Love of Lesbian. Además proporciona un análisis de sentiminetos del texto dado y una nube de palabras. \\
+El proyecto consta de tres módulos: \\
 # 1. Módulo classify: 
 En primera instancia contiene las funciones necesarias para limpiar el texto que el usuario ingrese, así como los textos utilizados para el entrenamiento del algoritmo; esto es quitar signos de puntuación, pronombres y artículos, extrayendo las raíces de las palabras principales del texto. Por ejemplo, si en los textos aparecen las palabras amigo, amiga, amigos, se utiliza la raíz 'amig' para contarlas.
 Función 'contador_palabras': Contiene una función contadora que, una vez limpio el texto, cuenta la cantidad de veces que ocurre la raíz de cada palabra en el texto proporcionado.
